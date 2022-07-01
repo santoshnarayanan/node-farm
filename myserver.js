@@ -7,7 +7,7 @@ const replaceTemplate = require('./modules/replaceTemplate');
 //! SERVER side code 
  
 
- //file read in synchronous way 
+ //* file read in synchronous way 
  const tempOverview = fs.readFileSync(`${__dirname}/templates/template-overview.html`,'utf-8');
  const tempCard = fs.readFileSync(`${__dirname}/templates/template-card.html`,'utf-8');
  const tempProduct = fs.readFileSync(`${__dirname}/templates/template-product.html`,'utf-8');
@@ -19,7 +19,7 @@ const replaceTemplate = require('./modules/replaceTemplate');
 const server = http.createServer((req,res)=> {
   const {query, pathname} = url.parse(req.url, true);
 
-  //Overview
+  //!Overview
   if(pathname === '/overview' || pathname === '/'){
     res.writeHead(200,{'Content-type': 'text/html' });
 
@@ -27,14 +27,14 @@ const server = http.createServer((req,res)=> {
     const output = tempOverview.replace('{%PRODUCT_CARDS%}',cardsHtml);
     res.end(output); // sending response
 
-    //Product
+    //!Product
   }else if(pathname === '/product'){
     res.writeHead(200,{'Content-type': 'text/html' });
     const product = dataObj[query.id];
     const output =  replaceTemplate(tempProduct, product);
     res.end(output);
 
-    //API
+    //!API
   }else if(pathname === '/api'){
     res.writeHead(200,{'Content-type': 'application/json' });
     res.end(data);
@@ -48,8 +48,8 @@ const server = http.createServer((req,res)=> {
 
 
 
-//#region listening server
+//! server listening
 server.listen(8000,'127.0.0.1',()=>{
   console.log('Listening to requests on port 8000');
 });
-//#endregion
+
